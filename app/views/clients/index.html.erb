@@ -1,0 +1,22 @@
+<!-- app/views/clients/index.html.erb -->
+<h1>Clients</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Balance</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= client.name %></td>
+        <td><%= client.balance %></td>
+        <td><%= link_to 'Create Sale', create_sale_client_path(client) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

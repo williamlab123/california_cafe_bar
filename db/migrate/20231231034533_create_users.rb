@@ -14,6 +14,12 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.float :price 
       t.timestamps
     end
+
+    create_table :client do |t|
+      t.string :name
+      t.references :user, null: false, foreign_key: true
+      t.float :balance
+    end
     
   end
 end
