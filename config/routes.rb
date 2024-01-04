@@ -4,9 +4,9 @@ Rails.application.routes.draw do
 
   resources :stock, only: %i[new create index show]
 
-  resources :clients, only: %i[new index create] do
-    post 'create_sale', on: :member
-  end
+  resources :clients, only: %i[new index create]
+
+
 
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
