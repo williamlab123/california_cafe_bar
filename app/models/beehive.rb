@@ -1,2 +1,0 @@
-class Beehive < ApplicationRecord
-end

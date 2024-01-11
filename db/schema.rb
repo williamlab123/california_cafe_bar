@@ -10,10 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_11_002651) do
-  create_table "beehives", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2024_01_11_190008) do
+  create_table "beehive_groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.integer "user_id"
+    t.integer "beehive_amount"
+    t.float "honey_amount"
   end
 
   create_table "clients", force: :cascade do |t|

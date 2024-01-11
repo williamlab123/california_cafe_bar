@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[new create destroy]
 
+  resources :beehives, only: %i[new create index show update destroy edit]
+
   delete '/logout', to: 'sessions#destroy', as: :logout
 
   get 'dashboard/sales_comparison', to: 'dashboard#sales_comparison'
