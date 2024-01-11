@@ -1,0 +1,20 @@
+<!-- app/views/stocks/index.html.erb -->
+<h1>All Stock Items</h1>
+<%= link_to 'Add Item', new_stock_path, class: 'button' %>
+  <%= link_to 'Back to Index', root_path %>
+
+
+<% @stocks.each do |stock| %>
+  <div>
+    <h2><%= stock.name %></h2>
+    <p>User ID: <%= stock.user_id %></p>
+    <p>Amount: <%= stock.amount %></p>
+    <p>Price: <%= stock.price %></p>
+    <p>Created At: <%= stock.created_at %></p>
+    
+    <%= form_with url: stock_path(stock), method: :post do %>
+      <%= hidden_field_tag :_method, :delete %>
+      <%= submit_tag 'Delete' %>
+    <% end %>
+  </div>
+<% end %>

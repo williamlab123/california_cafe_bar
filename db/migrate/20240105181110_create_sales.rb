@@ -1,9 +1,11 @@
 class CreateSales < ActiveRecord::Migration[7.1]
   def change
     create_table :sales do |t|
-      t.references :client, null: false, foreign_key: true
-      t.references :stock, null: false, foreign_key: true
+      t.integer :client_id
+      t.integer :stock_id
       t.integer :quantity
+      t.decimal :total_price
+      t.integer :user_id
 
       t.timestamps
     end

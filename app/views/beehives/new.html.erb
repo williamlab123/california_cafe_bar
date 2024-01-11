@@ -1,0 +1,13 @@
+<h1>Create a New Beehive</h1>
+
+<%= form_for @beehive do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :beehive_amount %>
+    <%= f.number_field :beehive_amount %>
+  </div>
+  <%= f.submit "Create Beehive" %>
+<% end %>

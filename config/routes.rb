@@ -1,11 +1,26 @@
 Rails.application.routes.draw do
+  get 'beehives/index'
+  get 'dashboard/Index'
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :stock, only: %i[new create index show]
+  resources :stocks, only: %i[new create index show update destroy edit]
 
-  resources :clients, only: %i[new index create]
+  resources :clients, only: %i[new index create destroy]
 
+  resources :sales, only: %i[new create index show]
+
+  resources :users, only: %i[new create]
+
+  resources :sessions, only: %i[new create destroy]
+
+  resources :beehives, only: %i[new create index show update destroy edit]
+
+  delete '/logout', to: 'sessions#destroy', as: :logout
+
+  get 'dashboard/sales_comparison', to: 'dashboard#sales_comparison'
+
+  get '/dashboard', to: 'dashboard#index'
 
 
   get 'login', to: 'sessions#new'
