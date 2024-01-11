@@ -1,9 +1,9 @@
-class ClientsController < ApplicationController
+class ClientsController < AuthenticatedController
   def create
     @clients = Client.new(client_params)
     @clients.user = User.find(session[:user_id]) if session[:user_id]
     if @clients.save
-      redirect_to @clients
+      redirect_to clients_url
     else
       puts @clients.errors.full_messages
       render :new
@@ -11,12 +11,18 @@ class ClientsController < ApplicationController
   end
 
   def index
-    @clients = Client.all
+    @clients = Client.where(user_id: session[:user_id])
   end
 
   def new
     @clients = Client.new
-    @stock = Stock.all
+    @stock = Stock.where(user_id: session[:user_id])
+  end
+
+  def destroy
+    @clients = Client.find(params[:id])
+    @clients.destroy
+    redirect_to clients_url
   end
 
   private

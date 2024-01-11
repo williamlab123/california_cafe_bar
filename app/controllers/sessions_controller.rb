@@ -25,9 +25,16 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    reset_session
-    redirect_to root_url, notice: 'Logged out successfully!'
+    if @current_user
+      reset_session
+      redirect_to login_path, notice: 'Logged out successfully!'
+    else
+      redirect_to login_path, notice: 'No user logged in'
+    end
   end
+
+      
+    
 
   private
 
