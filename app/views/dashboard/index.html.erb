@@ -1,22 +1,4 @@
-<table>
-  <thead>
-    <tr>
-      <th>Month</th>
-      <th>Total Balance</th>
-      <th>Total Items Sold</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% sexo.each do |month, totals| %>
-      <tr>
-        <td><%= month.strftime("%B %Y") %></td>
-        <td><%= totals[0] %></td>
-        
-        <td><%= totals[1] %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <h1> Dashboard</h1>
+  <%= link_to 'Sales', dashboard_sales_path	 %>
+    <%= link_to 'Home', root_path	 %>
 
-
-<%=  render "dashboard/sexo"%>
