@@ -1,0 +1,17 @@
+
+
+<h1>Create a New Beehive Group</h1>
+  <%= link_to 'Back to Index', root_path %>
+
+<%= form_with(model: @beehive_group, url: beehives_groups_path, local: true) do |form| %>
+  <div>
+    <%= form.label :name, 'Name' %>
+    <%= form.text_field :name %>
+  </div>
+   <div>
+    <%= form.label :beehive_amount %>
+    <%= form.number_field :beehive_amount %>
+  </div>
+
+  <%= form.submit "Create Beehive" %>
+<% end %>

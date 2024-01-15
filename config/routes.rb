@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :stocks, only: %i[new create index show update destroy edit]
+  resources :stocks
 
-  resources :clients, only: %i[new index create destroy]
+  resources :clients
 
   resources :sales, only: %i[new create index show]
 
@@ -14,13 +14,19 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[new create destroy]
 
-  resources :beehives, only: %i[new create index show update destroy edit]
 
+  resources :dashboard, only: %i[index]
+
+  resources :beehives_groups do
+    post :collect, on: :member
+  end  
+  
   delete '/logout', to: 'sessions#destroy', as: :logout
 
-  get 'dashboard/sales_comparison', to: 'dashboard#sales_comparison'
+  # get 'dashboard/sales_comparison', to: 'dashboard#sales_comparison'
 
-  get '/dashboard', to: 'dashboard#index'
+  get '/dashboard/sales', to: 'dashboard#sales'
+  get '/dashboard/compare-months', to: 'dashboard#compare_months'
 
 
   get 'login', to: 'sessions#new'
