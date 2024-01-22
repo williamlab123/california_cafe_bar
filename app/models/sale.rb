@@ -2,10 +2,11 @@ class Sale < ApplicationRecord
   belongs_to :client
   belongs_to :stock
   belongs_to :user
+  has_one :recipe
 
   before_create :calculate_total_price
-  validate :update_stock_quantity 
-  
+  validate :update_stock_quantity
+  after_create :create_recipe
 
   validates :user, :client, :stock, presence: true
 
@@ -23,5 +24,16 @@ class Sale < ApplicationRecord
     else
       stock.save
     end
+  end
+
+  def create_recipe
+    Recipe.create(
+      sale: self,
+      client_id: self.client_id,
+      stock_id: self.stock_id,
+      quantity: self.quantity,
+      total_price: self.total_price,
+      user_id: self.user_id
+    )
   end
 end

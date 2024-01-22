@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_13_173332) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_20_023353) do
   create_table "beehive_groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -28,6 +28,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_13_173332) do
     t.float "balance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "recipes", force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "stock_id"
+    t.integer "quantity"
+    t.decimal "total_price"
+    t.integer "user_id"
+    t.integer "sale_id", null: false
+    t.index ["sale_id"], name: "index_recipes_on_sale_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -56,4 +66,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_13_173332) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "recipes", "sales"
 end

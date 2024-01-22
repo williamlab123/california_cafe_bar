@@ -8,11 +8,15 @@ Rails.application.routes.draw do
 
   resources :clients
 
-  resources :sales, only: %i[new create index show]
+  resources :sales do
+    member do
+      get :download_recipe
+    end
+  end
 
   resources :users, only: %i[new create]
 
-  resources :sessions, only: %i[new create destroy]
+  resources :sessions, only: %i[new index create destroy]
 
 
   resources :dashboard, only: %i[index]
@@ -29,8 +33,15 @@ Rails.application.routes.draw do
   get '/dashboard/compare-months', to: 'dashboard#compare_months'
 
 
-  get 'login', to: 'sessions#new'
+  get 'login', to: 'sessions#index'
   post 'login', to: 'sessions#create'
+
+  get 'login/new', to: 'sessions#new'
+  post 'sessions/new', to: 'sessions#create'
+  post 'sessions/new', to: 'sessions#new'
+
+
+  
 
   # get "index", to: "home#index"
   root 'home#index'
