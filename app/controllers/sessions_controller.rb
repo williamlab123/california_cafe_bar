@@ -20,7 +20,8 @@ class SessionsController < ApplicationController
       redirect_to root_url, notice: 'Logged in successfully'
     else
       flash.now[:alert] = 'Invalid username/password combination'
-      render :new
+      Rails.logger.debug "SEXOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+      # render :new
     end
   end
 

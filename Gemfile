@@ -12,6 +12,9 @@ gem "sprockets-rails"
 # gem "pg", "~> 1.1"
 gem "sqlite3"
 
+# Gem to download the recipes in PDF
+gem 'wicked_pdf'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 
