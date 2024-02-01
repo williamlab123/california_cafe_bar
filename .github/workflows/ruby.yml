@@ -1,0 +1,45 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
+# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+
+name: Ruby
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.6', '2.7', '3.0']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Ruby
+    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+    # change this to (see https://github.com/ruby/setup-ruby#versioning):
+    # uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      run: |
+      bundle exec rails runner "User.create!(username: 'testuser', password: 'password')"
+      bundle exec rails runner "Client.create!(name: 'testclient')"
+      bundle exec rails runner "Stock.create!(name: 'teststock', user_id: User.first.id, amount: 10, price: 10.0)"
+      bundle exec rails runner "Sale.create!(client_id: Client.first.id, stock_id: Stock.first.id, quantity: 1, total_price: 10.0, user_id: User.first.id)"
+      bundle exec rails runner "Recipe.create!(sale_id: Sale.first.id, recipe_note: 'testnote')"
+      bundle.exec rails runner "BeehiveGroup.create!(name: 'testgroup')"
+      bundle exec rake
