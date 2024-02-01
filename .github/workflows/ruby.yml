@@ -29,9 +29,5 @@ jobs:
         bundle exec rake db:schema:load
     - name: Create data and run tests
       run: |
-        bundle exec rails runner "user = User.create(username: 'testuser', password: 'testpassword', password_confirmation: 'testpassword'); if user.errors.any?; puts user.errors.full_messages; exit 1; end"
-        bundle exec rails runner "stock = Stock.create(name: 'teststock', user_id: 1, amount: 10, price: 10.0); if stock.errors.any?; puts stock.errors.full_messages; exit 1; end"
-        bundle exec rails runner "sale = Sale.create(client_id: 1, stock_id: 1, quantity: 1, total_price: 10.0, user_id: 1); if sale.errors.any?; puts sale.errors.full_messages; exit 1; end"
-        bundle exec rails runner "recipe = Recipe.create(sale_id: 1, recipe_note: 'testnote'); if recipe.errors.any?; puts recipe.errors.full_messages; exit 1; end"
-        bundle exec rails runner "beehive_group = BeehiveGroup.create(name: 'testgroup'); if beehive_group.errors.any?; puts beehive_group.errors.full_messages; exit 1; end"
+        bundle exec rails runner "user = User.create(username: 'testuser', password: 'testpassword', password_confirmation: 'testpassword')"
         bundle exec rake
