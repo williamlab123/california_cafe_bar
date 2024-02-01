@@ -1,0 +1,13 @@
+<!-- app/views/clients/new.html.erb -->
+<h1>New Client</h1>
+  <%= link_to 'Back to Index', root_path %>
+
+<%= form_with(model: @clients, local: true) do |form| %>
+  <div>
+    <%= form.label :name, 'Name' %>
+    <%= form.text_field :name %>
+ 
+  </div>
+
+  <%= form.submit 'Create Client' %>
+<% end %>

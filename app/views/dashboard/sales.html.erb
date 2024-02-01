@@ -1,0 +1,25 @@
+<table>
+  <h1>Sales Dashboard</h1>
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Total Balance</th>
+      <th>Total Items Sold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sales.each do |month, totals| %>
+      <tr>
+        <td><%= month.strftime("%B %Y") %></td>
+        <td><%= totals[0] %></td>
+        
+        <td><%= totals[1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <%= link_to 'Back to dashboard', dashboard_index_path	 %>
+
+
+
+<%# <%=  render "dashboard/sales"%> %>

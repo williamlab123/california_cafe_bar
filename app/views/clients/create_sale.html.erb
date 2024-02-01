@@ -1,0 +1,19 @@
+<!-- app/views/clients/create_sale.html.erb -->
+<h1>Create Sale for <%= @clients.name %></h1>
+  <%= link_to 'Back to Index', root_path %>
+
+<%= form_with(url: create_sale_client_path(@clients), local: true) do |form| %>
+  <div>
+    <%= form.label :stock_id, 'Stock ID' %>
+    <%= form.number_field :stock_id %>
+  </div>
+
+  <div>
+    <%= form.label :quantity, 'Quantity' %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <%= form.hidden_field :user_id, value: session[:user_id] %>
+
+  <%= form.submit 'Create Sale' %>
+<% end %>

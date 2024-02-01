@@ -1,0 +1,36 @@
+<style>
+  td, th {
+    padding-right: 50px;
+    margin-left: 20px;
+  }
+</style>
+<table>
+  <h1>All Sales</h1>
+  <thead>
+    <tr>
+      <th>Recipe</th>
+      <th>Client</th>
+      <th>When</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+ <tbody>
+  <% @sales.each do |sale| %>
+    <% if sale.client && sale.stock %>
+      <tr>
+        <td><%= link_to 'Download Recipe', download_recipe_sale_path(sale) %></td>
+        <td><%= sale.client.name %></td>
+        <td><%= sale.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+        <td><%= sale.stock.name %></td>
+        <td><%= sale.quantity %></td>
+        <td><%= sale.stock.price %></td>
+        <td><%= sale.total_price %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</tbody>
+  <%= link_to 'Back to Index', root_path %>
+</table>

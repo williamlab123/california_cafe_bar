@@ -20,14 +20,22 @@ class SessionsController < ApplicationController
       redirect_to root_url, notice: 'Logged in successfully'
     else
       flash.now[:alert] = 'Invalid username/password combination'
-      render :new
+      Rails.logger.debug "SEXOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+      # render :new
     end
   end
 
   def destroy
-    reset_session
-    redirect_to root_url, notice: 'Logged out successfully!'
+    if @current_user
+      reset_session
+      redirect_to login_path, notice: 'Logged out successfully!'
+    else
+      redirect_to login_path, notice: 'No user logged in'
+    end
   end
+
+      
+    
 
   private
 

@@ -10,33 +10,61 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_31_175625) do
-  create_table "logins", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2024_01_20_023353) do
+  create_table "beehive_groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.integer "user_id"
+    t.integer "beehive_amount"
+    t.float "honey_amount"
+    t.decimal "honey_retrievement", precision: 12, scale: 4
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.string "required"
+    t.float "balance"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "stock", force: :cascade do |t|
-    t.string "name"
-    t.integer "user_id", null: false
-    t.integer "amount"
-    t.float "price"
+  create_table "recipes", force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "stock_id"
+    t.integer "quantity"
+    t.decimal "total_price"
+    t.integer "user_id"
+    t.integer "sale_id", null: false
+    t.index ["sale_id"], name: "index_recipes_on_sale_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.integer "client_id"
+    t.integer "stock_id"
+    t.integer "quantity"
+    t.decimal "total_price"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_stock_on_user_id"
   end
 
   create_table "stocks", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.integer "amount"
+    t.float "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "username"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "stock", "users"
+  add_foreign_key "recipes", "sales"
 end
