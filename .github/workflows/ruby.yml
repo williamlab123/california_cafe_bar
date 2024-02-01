@@ -29,10 +29,10 @@ jobs:
         bundle exec rake db:schema:load
     - name: Create data and run tests
       run: |
-        bundle exec rails runner "User.create!(username: 'testuser', password: 'testpassword')"
-        bundle exec rails runner "Client.create!(name: 'testclient')"
-        bundle exec rails runner "Stock.create!(name: 'teststock', user_id: User.first.id, amount: 10, price: 10.0)"
-        bundle exec rails runner "Sale.create!(client_id: Client.first.id, stock_id: Stock.first.id, quantity: 1, total_price: 10.0, user_id: User.first.id)"
-        bundle exec rails runner "Recipe.create!(sale_id: Sale.first.id, recipe_note: 'testnote')"
-        bundle exec rails runner "BeehiveGroup.create!(name: 'testgroup')"
+        bundle exec rails runner "User.create(username: 'testuser', password: 'testpassword')"
+        bundle exec rails runner "Client.create(name: 'testclient')"
+        bundle exec rails runner "Stock.create(name: 'teststock', user_id: User.first.id, amount: 10, price: 10.0)"
+        bundle exec rails runner "Sale.create(client_id: Client.first.id, stock_id: Stock.first.id, quantity: 1, total_price: 10.0, user_id: User.first.id)"
+        bundle exec rails runner "Recipe.create(sale_id: Sale.first.id, recipe_note: 'testnote')"
+        bundle exec rails runner "BeehiveGroup.create(name: 'testgroup')"
         bundle exec rake
