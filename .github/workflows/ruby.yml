@@ -29,8 +29,7 @@ jobs:
         bundle exec rake db:schema:load
     - name: Create data and run tests
       run: |
-       bundle exec rails runner "user = User.create(username: 'testuser', password: 'testpassword'); if user.errors.any?; puts user.errors.full_messages; exit 1; end"
-        bundle exec rails runner "client = Client.create(name: 'testclient'); if client.errors.any?; puts client.errors.full_messages; exit 1; end"
+        bundle exec rails runner "user = User.create(username: 'testuser', password: 'testpassword', password_confirmation: 'testpassword'); if user.errors.any?; puts user.errors.full_messages; exit 1; end"
         bundle exec rails runner "stock = Stock.create(name: 'teststock', user_id: User.first.id, amount: 10, price: 10.0); if stock.errors.any?; puts stock.errors.full_messages; exit 1; end"
         bundle exec rails runner "sale = Sale.create(client_id: Client.first.id, stock_id: Stock.first.id, quantity: 1, total_price: 10.0, user_id: User.first.id); if sale.errors.any?; puts sale.errors.full_messages; exit 1; end"
         bundle exec rails runner "recipe = Recipe.create(sale_id: Sale.first.id, recipe_note: 'testnote'); if recipe.errors.any?; puts recipe.errors.full_messages; exit 1; end"
