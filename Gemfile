@@ -15,6 +15,9 @@ gem "sqlite3"
 #ajax
 gem 'rails-ujs'
 
+#excel
+gem 'caxlsx'
+
 # Gem to download the recipes in PDF
 gem 'wicked_pdf'
 

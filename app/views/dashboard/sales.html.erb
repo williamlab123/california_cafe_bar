@@ -14,7 +14,7 @@
     <td><%= stock ? stock.name : 'Stock not found' %></td>
     <td><%= sale.quantity %></td>
     <td><%= sale.total_price %></td>
-    <td><%= sale.created_at.in_time_zone('Brasilia').strftime('- %d/%m/%Y %H:%M:%S') %></td>  </tr>
+    <td><%= sale.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></td>  </tr>
   <% end %>
  <br>
       <td>Today Balance <%= @today_balance %></td>

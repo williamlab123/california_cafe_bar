@@ -1,0 +1,10 @@
+<h1>Items vendidos hoje</h1>
+<% @stock_items_sold.each do |stock_id, quantity| %>
+  <% stock = Stock.find_by_id(stock_id) %>
+  <tr>
+    <td><%= stock ? stock.name : 'Stock not found' %></td>
+    <td><%= quantity %></td>
+    <br>
+  </tr>
+<% end %>
+<%= link_to 'Home', root_path, class: 'btn btn-primary' %>
