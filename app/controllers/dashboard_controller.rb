@@ -15,8 +15,9 @@ class DashboardController < ApplicationController
 
   def day_sales
     @today_sales = Sale.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+                       .includes(:stock) # Preload the Stock association
   end
-
+  
   def day_balance
     @today_balance = Sale.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
                           .sum(:total_price)
@@ -37,4 +38,15 @@ class DashboardController < ApplicationController
    end
 
   def show; end
+
+  def export
+    day_sales
+    day_stock
+
+    respond_to do |format|
+      format.xlsx {
+        response.headers['Content-Disposition'] = 'attachment; filename="sales_and_stock_data.xlsx"'
+      }
+    end
+  end
 end
