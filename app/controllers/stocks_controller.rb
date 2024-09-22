@@ -18,7 +18,7 @@ class StocksController < AuthenticatedController
   end
 
   def index
-    @stocks = Stock.where(user_id: session[:user_id])
+    @stocks = Stock.all
   end
 
   def destroy

@@ -13,3 +13,4 @@
   <p>Total Price: <%= session[:stocks].sum { |stock| stock["price"] } %></p>
 <%= button_to 'Finish', finish_sale_barcodes_path, method: :post %>
 <% end %>
+    <%= link_to 'Home', root_path	 %>
