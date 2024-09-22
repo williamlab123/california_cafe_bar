@@ -10,15 +10,12 @@
     <p>Amount: <%= stock.amount %></p>
     <p>Price: <%= stock.price %></p>
     <p>Barcode: <%= stock.barcode %></p>
-    <p>Created At: <%= stock.created_at %></p>
+    <td><%= stock.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></td>  </tr>
     
     <%= form_with url: stock_path(stock), method: :post do %>
       <%= hidden_field_tag :_method, :delete %>
       <%= submit_tag 'Delete' %>
     <% end %>
-     <%= form_with url: stock_path(stock), method: :post do %>
-      <%= hidden_field_tag :_method, :edit %>
-      <%= submit_tag 'Edit' %>
-    <% end %>
+    <%= link_to 'Edit', edit_stock_path(stock), class: 'button' %>
   </div>
 <% end %>

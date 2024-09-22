@@ -1,5 +1,29 @@
+<h1>Today's Sales</h1>
 <table>
-  <h1>Sales Dashboard</h1>
+  <thead>
+    <tr>
+      <th>Stock</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+ <% @today_sales.each do |sale| %>
+  <% stock = Stock.find_by_id(sale.stock_id) %>
+  <tr>
+    <td><%= stock ? stock.name : 'Stock not found' %></td>
+    <td><%= sale.quantity %></td>
+    <td><%= sale.total_price %></td>
+    <td><%= sale.created_at.in_time_zone('Brasilia').strftime('- %d/%m/%Y %H:%M:%S') %></td>  </tr>
+  <% end %>
+ <br>
+      <td>Today Balance <%= @today_balance %></td>
+
+  </tbody>
+</table>
+
+<h1>Sales Dashboard</h1>
+<table>
   <thead>
     <tr>
       <th>Month</th>
@@ -18,8 +42,5 @@
     <% end %>
   </tbody>
 </table>
-  <%= link_to 'Back to dashboard', dashboard_index_path	 %>
 
-
-
-<%# <%=  render "dashboard/sales"%> %>
+<%= link_to 'Back to dashboard', dashboard_index_path %>
