@@ -1,0 +1,15 @@
+<!-- app/views/barcodes/scan.html.erb -->
+<h1>Scan Barcode</h1>
+
+<%= form_with url: barcodes_search_path, method: :post, id: 'barcode_form' do %>
+  <%= text_field_tag :barcode, nil, autofocus: true, placeholder: "Scan Barcode Here", oninput: "if(this.value.length === 9) this.form.submit();" %>
+<% end %>
+
+<% (session[:stocks] || []).each do |stock| %>
+  <%= render 'stock', stock: stock %>
+<% end %>
+
+<% if session[:stocks] && session[:stocks].any? %>
+  <p>Total Price: <%= session[:stocks].sum { |stock| stock["price"] } %></p>
+<%= button_to 'Finish', finish_sale_barcodes_path, method: :post %>
+<% end %>

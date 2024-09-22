@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'beehives/index'
+  get 'barcodes/scan'
+  get 'barcodes/search'
   get 'dashboard/Index'
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -18,12 +19,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[new index create destroy]
 
-
   resources :dashboard, only: %i[index]
-
-  resources :beehives_groups do
-    post :collect, on: :member
-  end  
   
   delete '/logout', to: 'sessions#destroy', as: :logout
 
@@ -39,6 +35,17 @@ Rails.application.routes.draw do
   get 'login/new', to: 'sessions#new'
   post 'sessions/new', to: 'sessions#create'
   post 'sessions/new', to: 'sessions#new'
+
+   # Route for the scan page (input field to scan barcode)
+   get 'barcodes/scan', to: 'barcodes#scan'
+
+   resources :barcodes do
+     post 'finish_sale', on: :collection
+   end
+   
+   # Route to handle the barcode search
+   post 'barcodes/search', to: 'barcodes#search'
+
 
 
   

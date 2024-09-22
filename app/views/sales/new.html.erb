@@ -1,8 +1,4 @@
 <%= form_with(model: @sale, local: true) do |form| %>
-  <div>
-    <%= form.label :client_id %>
-    <%= form.select :client_id, Client.where(user_id: session[:user_id]).collect { |client| [client.name, client.id] } %>
-  </div>
 
   <div>
     <%= form.label :stock_id %>

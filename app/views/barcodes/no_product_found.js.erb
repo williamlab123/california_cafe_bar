@@ -1,0 +1,8 @@
+// app/views/barcodes/no_product_found.js.erb
+document.getElementById('product-details').innerHTML = `
+  <h2>No Product Found</h2>
+  <p>Barcode: <%= j params[:barcode] %> did not match any product in our records.</p>
+`;
+
+// Clear the input field after the error message
+document.getElementById('barcode-input').value = '';
