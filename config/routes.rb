@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   get '/dashboard/sales', to: 'dashboard#sales'
   get '/dashboard/compare-months', to: 'dashboard#compare_months'
+  get '/dashboard/stock', to: 'dashboard#stock'
 
 
   get 'login', to: 'sessions#index'

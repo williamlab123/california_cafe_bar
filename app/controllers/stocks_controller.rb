@@ -1,4 +1,5 @@
 # app/controllers/stocks_controller.rb
+
 class StocksController < AuthenticatedController
   def new
     @stock = Stock.new
@@ -26,7 +27,6 @@ class StocksController < AuthenticatedController
     @stock.destroy
     redirect_to stocks_path
   end
-
 
   def edit
     @stock = Stock.find(params[:id])

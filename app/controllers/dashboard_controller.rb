@@ -22,6 +22,15 @@ class DashboardController < ApplicationController
                           .sum(:total_price)
   end
 
+  def day_stock
+    @today_sales = Sale.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @stock_items_sold = @today_sales.group(:stock_id).sum(:quantity)
+  end
+
+  def stock
+    day_stock
+  end
+
   def compare_months; end
 
   def index
