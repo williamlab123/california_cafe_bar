@@ -19,16 +19,20 @@ Rails.application.routes.draw do
 
   resources :sessions, only: %i[new index create destroy]
 
-  resources :dashboard, only: %i[index]
   
   delete '/logout', to: 'sessions#destroy', as: :logout
 
   # get 'dashboard/sales_comparison', to: 'dashboard#sales_comparison'
+  resources :dashboard, only: %i[index]
 
-  get '/dashboard/sales', to: 'dashboard#sales'
-  get '/dashboard/compare-months', to: 'dashboard#compare_months'
-  get '/dashboard/stock', to: 'dashboard#stock'
+  get '/dashboard/sales', to: 'dashboard#sales', as: :dashboard_sales
+  get '/dashboard/compare-months', to: 'dashboard#compare_months', as: :dashboard_compare_months
+  get '/dashboard/stock', to: 'dashboard#stock', as: :dashboard_stock
+  get '/dashboard/export', to: 'dashboard#export', as: :dashboard_export # Add this line
+  
 
+  
+  
 
   get 'login', to: 'sessions#index'
   post 'login', to: 'sessions#create'

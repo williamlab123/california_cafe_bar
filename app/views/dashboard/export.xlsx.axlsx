@@ -1,0 +1,12 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: 'Sales and Stock Data') do |sheet|
+  # Add headers
+  sheet.add_row ['Date', 'Stock Name', 'Quantity Sold', 'Total Sales', 'Total Price']
+
+  # Loop through the sales and stock data
+  @today_sales.each do |sale|
+    stock_quantity = @stock_items_sold[sale.stock_id] || 0
+    stock_name = sale.stock.present? ? sale.stock.name : 'Unknown Product'
+    sheet.add_row [sale.created_at.strftime('%Y-%m-%d'), stock_name, stock_quantity, sale.quantity, sale.total_price]
+  end
+end
