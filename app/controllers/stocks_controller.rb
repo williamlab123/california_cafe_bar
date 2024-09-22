@@ -4,8 +4,6 @@ class StocksController < AuthenticatedController
     @stock = Stock.new
   end
 
-
-
   def create
     @stock = Stock.new(stock_params.merge(user: current_user))
     if @stock.save
@@ -47,6 +45,6 @@ end
   private
 
   def stock_params
-    params.require(:stock).permit(:name, :amount, :price)
+    params.require(:stock).permit(:name, :amount, :price, :barcode)
   end
 end

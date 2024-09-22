@@ -12,6 +12,9 @@ gem "sprockets-rails"
 # gem "pg", "~> 1.1"
 gem "sqlite3"
 
+#ajax
+gem 'rails-ujs'
+
 # Gem to download the recipes in PDF
 gem 'wicked_pdf'
 

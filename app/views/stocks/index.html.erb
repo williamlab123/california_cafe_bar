@@ -7,14 +7,18 @@
 <% @stocks.each do |stock| %>
   <div>
     <h2><%= stock.name %></h2>
-    <p>User ID: <%= stock.user_id %></p>
     <p>Amount: <%= stock.amount %></p>
     <p>Price: <%= stock.price %></p>
+    <p>Barcode: <%= stock.barcode %></p>
     <p>Created At: <%= stock.created_at %></p>
     
     <%= form_with url: stock_path(stock), method: :post do %>
       <%= hidden_field_tag :_method, :delete %>
       <%= submit_tag 'Delete' %>
+    <% end %>
+     <%= form_with url: stock_path(stock), method: :post do %>
+      <%= hidden_field_tag :_method, :edit %>
+      <%= submit_tag 'Edit' %>
     <% end %>
   </div>
 <% end %>
