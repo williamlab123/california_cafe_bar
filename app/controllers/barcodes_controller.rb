@@ -45,7 +45,9 @@ class BarcodesController < ApplicationController
     session[:stocks] = []
     redirect_to barcodes_scan_path, notice: 'Sale was successfully created.'
   end
-  
-  
-  
+
+  def cancel_sale
+    session[:stocks] = []
+    redirect_to barcodes_scan_path, notice: 'Sale was successfully canceled.'
+  end
 end

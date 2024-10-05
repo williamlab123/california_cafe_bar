@@ -4,6 +4,7 @@ class DashboardController < ApplicationController
   def sales
     day_sales
     day_balance
+    export_week_sales
 
     sales_by_month = Sale.all.group_by { |sale| sale.created_at.beginning_of_month }
     @sales_totals_by_month = sales_by_month.map do |month, sales|
@@ -13,9 +14,25 @@ class DashboardController < ApplicationController
     end.to_h
   end
 
+  def week_sales
+    export_week_sales
+
+    sales_by_week = Sale.all.group_by { |sale| sale.created_at.beginning_of_month }
+    @total_sales_by_week = sales_by_week.map do |week, sales|
+      total_price = sales.sum { |sale| sale.total_price || 0 }
+      total_quantity = sales.sum { |sale| sale.quantity || 0 }
+      [week, [total_price, total_quantity]]
+    end.to_h
+  end
+   
   def day_sales
     @today_sales = Sale.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
-                       .includes(:stock) # Preload the Stock association
+                       .includes(:stock) 
+  end
+
+  def export_week_sales
+    @week_sales = Sale.where(created_at: Time.zone.now.beginning_of_week..Time.zone.now.end_of_week)
+                      .includes(:stock) 
   end
   
   def day_balance
@@ -49,4 +66,5 @@ class DashboardController < ApplicationController
       }
     end
   end
-end
+ end
+

@@ -1,16 +1,89 @@
 <!-- app/views/barcodes/scan.html.erb -->
 <h1>Scan Barcode</h1>
 
-<%= form_with url: barcodes_search_path, method: :post, id: 'barcode_form' do %>
-  <%= text_field_tag :barcode, nil, autofocus: true, placeholder: "Scan Barcode Here", oninput: "if(this.value.length === 9) this.form.submit();" %>
-<% end %>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #7f7f7f;
+  }
 
-<% (session[:stocks] || []).each do |stock| %>
-  <%= render 'stock', stock: stock %>
-<% end %>
+  h1 {
+    color:  #555555;
+    text-align: center;
+  }
 
-<% if session[:stocks] && session[:stocks].any? %>
-  <p>Total Price: <%= session[:stocks].sum { |stock| stock["price"] } %></p>
-<%= button_to 'Finish', finish_sale_barcodes_path, method: :post %>
-<% end %>
-    <%= link_to 'Home', root_path	 %>
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  .form-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .form-container button, .form-container input[type="submit"] {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+
+  .form-container button:hover, .form-container input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .total-price {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .actions {
+    text-align: center;
+  }
+
+  .actions button, .actions a {
+    margin: 5px;
+  }
+
+.actions button, .actions a {
+    margin: 5px;
+  }
+</style>
+
+<div class="form-container">
+  <%= form_with url: barcodes_search_path, method: :post, id: 'barcode_form' do %>
+    <%= text_field_tag :barcode, nil, autofocus: true, placeholder: "Scan Barcode Here", oninput: "if(this.value.length === 13) this.form.submit();" %>
+  <% end %>
+
+  <%= form_with url: finish_sale_barcodes_path, method: :post, id: 'sale_form' do %>
+    <% (session[:stocks] || []).each_with_index do |stock, index| %>
+      <%= render 'stock', stock: stock, index: index %>
+    <% end %>
+
+    <% if session[:stocks] && session[:stocks].any? %>
+      <p class="total-price">Total Price: $<span id="total_price"><%= session[:stocks].sum { |stock| stock["price"] } %></span></p>
+      <div class="payment-method">
+        <%= label_tag :payment_method, 'Método de Pagamento' %>
+        <%= select_tag :payment_method, options_for_select([['Pix', 'pix'], ['Débito', 'debito'], ['Crédito', 'credito']]), prompt: 'Selecione um método' %>
+      </div>
+      <%= submit_tag 'Finish', id: 'finish_sale_button' %>
+    <% end %>
+  <% end %>
+
+  <div class="actions">
+    <%= button_to 'Cancelar', cancel_sale_barcodes_path, method: :post %>
+    <%= link_to 'Home', root_path %>
+  </div>
+</div>

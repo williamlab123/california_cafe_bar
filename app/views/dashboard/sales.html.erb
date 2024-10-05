@@ -5,21 +5,56 @@
       <th>Stock</th>
       <th>Quantity</th>
       <th>Total Price</th>
+      <th>Date</th>
     </tr>
   </thead>
   <tbody>
- <% @today_sales.each do |sale| %>
-  <% stock = Stock.find_by_id(sale.stock_id) %>
-  <tr>
-    <td><%= stock ? stock.name : 'Stock not found' %></td>
-    <td><%= sale.quantity %></td>
-    <td><%= sale.total_price %></td>
-    <td><%= sale.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></td>  </tr>
-  <% end %>
- <br>
-      <td>Today Balance <%= @today_balance %></td>
+    <% @today_sales.each do |sale| %>
+      <% stock = Stock.find_by_id(sale.stock_id) %>
+      <tr>
+        <td><%= stock ? stock.name : 'Stock not found' %></td>
+        <td><%= sale.quantity %></td>
+        <td><%= sale.total_price %></td>
+        <td><%= sale.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
+<p>Today Balance: <%= @today_balance %></p>
+
+<h1>Week's Sales</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Stock</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @total_sales_by_week.present? %>
+      <% @total_sales_by_week.each do |sale| %>
+        <% stock = Stock.find_by_id(sale.stock_id) %>
+        <tr>
+          <td><%= stock ? stock.name : 'Stock not found' %></td>
+          <td><%= sale.quantity %></td>
+          <td><%= sale.total_price %></td>
+          <td><%= sale.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">No sales this week.</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p>Week Balance: 
+  <%= @total_sales_by_week.present? ? @total_sales_by_week.values.sum { |total_price, _| total_price } : 'No sales this week' %>
+</p>
+
+<%= button_to 'Export Week Sales to Excel', export_week_sales_path, method: :get, class: 'btn btn-primary' %>
 
 <h1>Sales Dashboard</h1>
 <table>
@@ -31,17 +66,13 @@
     </tr>
   </thead>
   <tbody>
-    <% sales.each do |month, totals| %>
+    <% @sales_totals_by_month.each do |month, (total_price, total_quantity)| %>
       <tr>
-        <td><%= month.strftime("%B %Y") %></td>
-        <td><%= totals[0] %></td>
-        
-        <td><%= totals[1] %></td>
+        <td><%= month.strftime('%B %Y') %></td>
+        <td><%= total_price %></td>
+        <td><%= total_quantity %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to 'Export to Excel', dashboard_export_path(format: :xlsx) %>
-
-<%= link_to 'Back to dashboard', dashboard_index_path %>
+<%= link_to 'Home', root_path, class: 'btn btn-primary' %>
