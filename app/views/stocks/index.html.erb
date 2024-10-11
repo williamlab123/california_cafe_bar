@@ -1,18 +1,18 @@
 <!-- app/views/stocks/index.html.erb -->
-<h1>All Stock Items</h1>
+<h1>Todos os produtos em estoque</h1>
 <div class="actions">
-  <%= link_to 'Add Item', new_stock_path, class: 'btn btn-primary' %>
-  <%= link_to 'Back to Index', root_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Adicionar produto', new_stock_path, class: 'btn btn-primary' %>
+  <%= link_to 'Voltar para o inicio', root_path, class: 'btn btn-secondary' %>
 </div>
 
 <div class="stock-list">
   <% @stocks.each do |stock| %>
     <div class="stock-item">
       <h2><%= stock.name %></h2>
-      <p>Amount: <%= stock.amount %></p>
-      <p>Price: <%= stock.price %></p>
-      <p>Barcode: <%= stock.barcode %></p>
-      <p>Created At: <%= stock.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></p>
+      <p>Quantidade: <%= stock.amount %></p>
+      <p>Preço: <%= stock.price %></p>
+      <p>Código de barras: <%= stock.barcode %></p>
+      <p>Criado em: <%= stock.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></p>
       
       <div class="stock-actions">
         <%= form_with url: stock_path(stock), method: :post, class: 'delete-form' do %>

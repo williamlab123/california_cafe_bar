@@ -1,19 +1,19 @@
-<h1>Today's Sales</h1>
+<h1>Vendas de hoje</h1>
 <table class="sales-table">
   <thead>
     <tr>
-      <th>Stock</th>
-      <th>Quantity</th>
-      <th>Total Price</th>
-      <th>Date</th>
-      <th>Payment Method</th>
+      <th>Estoque</th>
+      <th>Quantidade</th>
+      <th>Preço total</th>
+      <th>Data</th>
+      <th>Método de pagamento</th>
     </tr>
   </thead>
   <tbody>
     <% @today_sales.each do |sale| %>
       <% stock = Stock.find_by_id(sale.stock_id) %>
       <tr>
-        <td><%= stock ? stock.name : 'Stock not found' %></td>
+        <td><%= stock ? stock.name : 'Produto não encontrado' %></td>
         <td><%= sale.quantity %></td>
         <td><%= sale.total_price %></td>
         <td><%= sale.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S') %></td>
@@ -22,15 +22,15 @@
     <% end %>
   </tbody>
 </table>
-<p class="balance">Today Balance: <%= @today_balance %></p>
+<p class="balance">Saldo do dia: <%= @today_balance %></p>
 
-<h1>Sales Dashboard</h1>
+<h1>Dashboard</h1>
 <table class="sales-table">
   <thead>
     <tr>
-      <th>Month</th>
-      <th>Total Balance</th>
-      <th>Total Items Sold</th>
+      <th>Mês</th>
+      <th>Saldo total</th>
+      <th>Total de items vendidos</th>
     </tr>
   </thead>
   <tbody>
@@ -45,7 +45,7 @@
 </table>
 
 <div class="button-container">
-  <%= button_to 'Export Sales to Excel', dashboard_export_path, method: :get, class: 'btn btn-primary' %>
+  <%= button_to 'Exportar para o Excel', dashboard_export_path, method: :get, class: 'btn btn-primary' %>
   <%= link_to 'Home', root_path, class: 'btn btn-secondary' %>
 </div>
 
