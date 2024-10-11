@@ -1,12 +1,53 @@
-<h1>Items vendidos hoje</h1>
-<% @stock_items_sold.each do |stock_id, quantity| %>
-  <% stock = Stock.find_by_id(stock_id) %>
-  <tr>
-    <td><%= stock ? stock.name : 'Stock not found' %></td>
-    <td><%= quantity %></td>
-    <br>
-  </tr>
-<% end %>
-<%= link_to 'Home', root_path, class: 'btn btn-primary' %>
-<%= link_to 'Voltar', dashboard_index_path, class: 'btn btn-primary' %>
+<!-- app/views/stock.html.erb -->
+<div class="container">
+  <h1>Items vendidos hoje</h1>
+  <%= link_to 'Home', root_path, class: 'btn btn-primary' %>
+</div>
 
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-primary {
+    background-color: #0056b3;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #003366;
+  }
+</style>

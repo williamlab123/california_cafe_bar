@@ -1,14 +1,12 @@
-<!-- app/views/barcodes/scan.html.erb -->
 <h1>Scan Barcode</h1>
 
 <style>
   body {
     font-family: Arial, sans-serif;
-    background-color: #7f7f7f;
   }
 
   h1 {
-    color:  #555555;
+    color: #333;
     text-align: center;
   }
 
@@ -49,15 +47,16 @@
     margin: 20px 0;
   }
 
+  .payment-method {
+    margin: 20px 0;
+    text-align: center;
+  }
+
   .actions {
     text-align: center;
   }
 
   .actions button, .actions a {
-    margin: 5px;
-  }
-
-.actions button, .actions a {
     margin: 5px;
   }
 </style>
@@ -76,7 +75,7 @@
       <p class="total-price">Total Price: $<span id="total_price"><%= session[:stocks].sum { |stock| stock["price"] } %></span></p>
       <div class="payment-method">
         <%= label_tag :payment_method, 'Método de Pagamento' %>
-        <%= select_tag :payment_method, options_for_select([['Pix', 'pix'], ['Débito', 'debito'], ['Crédito', 'credito']]), prompt: 'Selecione um método' %>
+        <%= select_tag :payment_method, options_for_select([['Pix', 'pix'], ['Dinheiro', 'dinheiro'], ['Débito', 'debito'], ['Crédito', 'credito']]), prompt: 'Selecione um método' %>
       </div>
       <%= submit_tag 'Finish', id: 'finish_sale_button' %>
     <% end %>
@@ -87,3 +86,26 @@
     <%= link_to 'Home', root_path %>
   </div>
 </div>
+
+<script>
+  function updateTotalPrice() {
+    var totalPrice = 0;
+    document.querySelectorAll('.price_input').forEach(function(input) {
+      totalPrice += parseFloat(input.value);
+    });
+    var totalPriceElement = document.getElementById('total_price');
+    totalPriceElement.innerHTML = 'Total Price: $<span>' + totalPrice.toFixed(2) + '</span>';
+  }
+
+  document.querySelectorAll('.price_input').forEach(function(input) {
+    input.addEventListener('change', updateTotalPrice);
+  });
+
+  document.getElementById('sale_form').addEventListener('submit', function(event) {
+    var paymentMethod = document.getElementById('payment_method').value;
+    if (!paymentMethod) {
+      alert('Por favor, selecione um método de pagamento.');
+      event.preventDefault();
+    }
+  });
+</script>

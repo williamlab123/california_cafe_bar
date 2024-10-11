@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_21_032946) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_08_220734) do
   create_table "beehive_groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_032946) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payment_method"
   end
 
   create_table "stocks", force: :cascade do |t|

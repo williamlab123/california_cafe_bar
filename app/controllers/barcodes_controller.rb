@@ -25,15 +25,15 @@ class BarcodesController < ApplicationController
 
 
   def finish_sale
-    puts "CONTROLLER FINISHING SALE"
-    
+    payment_method = params[:payment_method]
+
     session[:stocks].each do |stock_data|
       stock_info = stock_data.is_a?(Array) ? stock_data.last : stock_data
       stock = Stock.find(stock_info['id'])
   
       puts "Current stock amount: #{stock.amount}, trying to create sale with quantity: 1"
   
-      sale = Sale.create(stock: stock, quantity: 1)
+      sale = Sale.new(stock: stock, quantity: 1, payment_method: payment_method)
   
       if sale.save
         puts "Sale successfully created!"

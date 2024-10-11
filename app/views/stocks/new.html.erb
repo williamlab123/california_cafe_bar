@@ -1,32 +1,129 @@
 <!-- app/views/stocks/new.html.erb -->
-<% if @stock.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
+<div class="container">
+  <% if @stock.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
+      <ul>
+        <% @stock.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-    <ul>
-    <% @stock.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+  <%= link_to 'Back to Index', root_path, class: 'btn btn-secondary' %>
 
-  <%= link_to 'Back to Index', root_path %>
+  <%= form_for @stock, url: stocks_path, class: 'stock-form' do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
 
-<%= form_for @stock, url: stocks_path do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+    <div class="form-group">
+      <%= f.label :amount %>
+      <%= f.number_field :amount, class: 'form-control' %>
+    </div>
 
+    <div class="form-group">
+      <%= f.label :price %>
+      <%= f.number_field :price, step: 0.01, class: 'form-control' %>
+    </div>
 
-  <%= f.label :amount %>
-  <%= f.number_field :amount %>
+    <div class="form-group">
+      <%= f.label :barcode %>
+      <%= f.number_field :barcode, class: 'form-control' %>
+    </div>
 
-  <%= f.label :price %>
-  <%= f.number_field :price %>
+    <div class="form-group">
+      <%= f.submit "Create Stock", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
 
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-  <%= f.label :barcode %>
-  <%= f.number_field :barcode %>
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+  }
 
-  <%= f.submit %>
-<% end %>
+  #error_explanation {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+
+  #error_explanation h2 {
+    margin: 0 0 10px 0;
+  }
+
+  #error_explanation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #error_explanation li {
+    margin: 5px 0;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-primary {
+    background-color: #0056b3;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #003366;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+</style>

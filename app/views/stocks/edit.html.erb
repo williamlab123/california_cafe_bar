@@ -1,25 +1,93 @@
-<%= form_with(model: @stock, local: true) do |form| %>
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+<div class="container">
+  <h1>Edit Stock Item</h1>
+  <div class="form-container">
+    <%= form_with(model: @stock, local: true, class: 'stock-form') do |form| %>
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, class: 'form-control' %>
+      </div>
 
-  <div>
-    <%= form.label :price %>
-    <%= form.number_field :price, step: 0.01 %>
-  </div>
+      <div class="form-group">
+        <%= form.label :price %>
+        <%= form.number_field :price, step: 0.01, class: 'form-control' %>
+      </div>
 
-  <div>
-    <%= form.label :amount %>
-    <%= form.number_field :amount %>
-  </div>
+      <div class="form-group">
+        <%= form.label :amount %>
+        <%= form.number_field :amount, class: 'form-control' %>
+      </div>
 
-    <div>
-    <%= form.label :barcode %>
-    <%= form.number_field :barcode %>
-  </div>
+      <div class="form-group">
+        <%= form.label :barcode %>
+        <%= form.number_field :barcode, class: 'form-control' %>
+      </div>
 
-  <div>
-    <%= form.submit "Update" %>
+      <div class="form-group">
+        <%= form.submit "Update", class: 'btn btn-primary' %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-primary {
+    background-color: #0056b3;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #003366;
+  }
+</style>

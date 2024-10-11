@@ -1,23 +1,103 @@
-<div>
-  <h1>Hello, <%= current_user.username.capitalize %></h1>
-</div>
-<div>
-  <%= button_to 'Logout', logout_path, method: :delete %>
-</div>
-
-<div>
-  <%= link_to 'Sales', sales_path %>
-</div>
-<div>
-  <%= link_to 'Stock', stocks_path %>
+<div class="container">
+  <h1>Dashboard</h1>
+  <div class="button-container">
+    <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
+    <%= link_to 'Sales', sales_path, class: 'btn btn-success' %>
+    <%= link_to 'Stock', stocks_path, class: 'btn btn-warning' %>
+    <%= link_to 'Dashboard', dashboard_index_path, class: 'btn btn-primary' %>
+    <%= link_to 'Leitor', barcodes_scan_path, class: 'btn btn-orange' %>
+  </div>
 </div>
 
-<div>
-  <%= link_to 'Dashboard', dashboard_index_path	 %>
-</div>
+<%= render "dashboard/sexo" %>
 
-<div>
-  <%= link_to 'Leitor', barcodes_scan_path	 %>
-</div>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-<%=  render "dashboard/sexo"%>
+  .container {
+    text-align: center;
+    background-color: #d3d3d3;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid black;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 250px;
+    align-self: center;
+  }
+
+  .btn-primary {
+    background-color: #004494;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: #003366;
+  }
+
+  .btn-danger {
+    background-color: #a71d2a;
+    color: white;
+  }
+
+  .btn-danger:hover {
+    background-color: #7f1420;
+  }
+
+  .btn-success {
+    background-color: #1e7e34;
+    color: white;
+  }
+
+  .btn-success:hover {
+    background-color: #155724;
+  }
+
+  .btn-warning {
+    background-color: #c69500;
+    color: black;
+  }
+
+  .btn-warning:hover {
+    background-color: #8c6d00;
+  }
+
+  .btn-orange {
+    background-color: #c06000;
+    color: white;
+  }
+
+  .btn-orange:hover {
+    background-color: #8c4600;
+  }
+</style>

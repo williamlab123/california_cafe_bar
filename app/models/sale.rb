@@ -11,7 +11,8 @@ class Sale < ApplicationRecord
   validates :stock, presence: true
 
   private
-
+ 
+    #add the logic to deal with the payment method
   def calculate_total_price
     self.total_price = quantity * stock.price
   end
