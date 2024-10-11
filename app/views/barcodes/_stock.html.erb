@@ -1,7 +1,35 @@
-<!-- app/views/barcodes/_stock.html.erb -->
 <div>
   <h2>Product Details:</h2>
   <p>Name: <%= stock["name"] %></p>
-  <p>Price: <%= stock["price"] %></p>
+  <p>
+    Price: $<span id="price_<%= index %>"><%= stock["price"] %></span>
+    <button type="button" onclick="changePrice(<%= index %>, -1)">-</button>
+    <button type="button" onclick="changePrice(<%= index %>, 1)">+</button>
+  </p>
+  <!-- Hidden field that needs to be updated when price changes -->
+  <%= hidden_field_tag "stocks[#{index}][price]", stock["price"], id: "price_input_#{index}", class: 'price_input' %>
 </div>
-    <%= link_to 'Home', root_path	 %>
+
+<!-- Inline JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Ensure the changePrice function is tied to the buttons
+    window.changePrice = function(index, delta) {
+      let priceSpan = document.getElementById(`price_${index}`);
+      let currentPrice = parseFloat(priceSpan.innerText);
+      let newPrice = currentPrice + delta;
+      
+      if (newPrice < 0) newPrice = 0;
+      
+      priceSpan.innerText = newPrice.toFixed(2);
+
+      let priceInput = document.getElementById(`price_input_${index}`);
+      priceInput.value = newPrice.toFixed(2);
+
+      // Debug log to ensure values are correct
+      console.log(`Updated price for index ${index}: ${newPrice}`);
+      console.log(`Hidden input for submission: ${priceInput.value}`);
+    };
+  });
+</script>
+

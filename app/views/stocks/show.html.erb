@@ -1,12 +1,75 @@
 <!-- app/views/stock/show.html.erb -->
-<h1><%= @stock.name %></h1>
+<div class="container">
+  <h1><%= @stock.name %></h1>
 
-<p>
-  <strong>User ID:</strong>
-  <%= @stock.user_id %>
-    <strong>Price:</strong>
-  <%= @stock.price %>
-    <strong>Amount</strong>
-  <%= @stock.amount %>
-</p>
-    <%= link_to 'Voltar', stocks_path, class: 'button' %>
+  <div class="stock-details">
+    <p>
+      <strong>User ID:</strong> <%= @stock.user_id %>
+    </p>
+    <p>
+      <strong>Price:</strong> <%= @stock.price %>
+    </p>
+    <p>
+      <strong>Amount:</strong> <%= @stock.amount %>
+    </p>
+  </div>
+
+  <%= link_to 'Voltar', stocks_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .stock-details {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .stock-details p {
+    margin: 10px 0;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+</style>
