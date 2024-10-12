@@ -4,23 +4,23 @@ class SessionsController < ApplicationController
   end
 
   def create
-    Rails.logger.debug "Processing SessionsController#create"
+    Rails.logger.debug 'Processing SessionsController#create'
     Rails.logger.debug "Params: #{params.inspect}"
-  
+
     user = User.find_by(username: session_params[:username])
-  
+
     if user
       Rails.logger.debug "Found user: #{user.inspect}"
     else
       Rails.logger.debug "No user found with username: #{session_params[:username]}"
     end
-  
+
     if user && user.authenticate(session_params[:password])
       session[:user_id] = user.id
-      redirect_to root_url, notice: 'Logged in successfully'
+      redirect_to '/', notice: 'Logged in successfully'
     else
       flash.now[:alert] = 'Invalid username/password combination'
-      Rails.logger.debug "SEXOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+      Rails.logger.debug 'SEXOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO'
       # render :new
     end
   end
@@ -33,9 +33,6 @@ class SessionsController < ApplicationController
       redirect_to login_path, notice: 'No user logged in'
     end
   end
-
-      
-    
 
   private
 
