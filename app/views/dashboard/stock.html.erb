@@ -1,53 +1,147 @@
-<!-- app/views/stock.html.erb -->
-<div class="container">
+<div class="page-title">
   <h1>Items vendidos hoje</h1>
+</div>
+
+<div class="container">
+  <% @stock_items_sold.group_by(&:first).each do |stock_id, items| %>
+    <% stock = Stock.find_by_id(stock_id) %>
+    <div class="item-row">
+      <div class="item-detail">
+        <% if stock %>
+          <%= link_to stock.name, stock_path(stock), class: 'btn-stock' %>
+        <% else %>
+          <p>Produto nao encontrado</p>
+        <% end %>
+      </div>
+      <div class="item-detail">
+        <label>Quantidade</label>
+        <p><%= items.sum(&:last) %></p>
+      </div>
+    </div>
+  <% end %>
   <%= link_to 'Home', root_path, class: 'btn btn-primary' %>
 </div>
 
 <style>
+  /* Body background with soft gradient */
   body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 20px;
+    background: linear-gradient(135deg, #b0b3b6, #7070AA);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    margin: 0;
+    color: #444;
   }
 
-  .container {
+  /* Page title styling */
+  .page-title {
     text-align: center;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-  }
-
-  h1 {
-    color: #333;
     margin-bottom: 20px;
   }
 
+  .page-title h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+
+  .btn-stock  
+  {
+    display: inline-block;
+    width: 100%;
+    padding: 5px 1px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color:  #0067c8;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 1s;
+  }
+
+   .btn-stock:hover {
+    background-color: #002644;
+    transform: scale(1.09);
+  }
+
+  /* Main container with border and shadow */
+  .container {
+    background-color: #9a9a9a;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #c7d0da; /* Slightly darker than background */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .container:hover {
+  }
+
+  /* Styling for each item row */
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #f7fafc; /* Light background for contrast */
+    border: 1px solid #d1d9e6;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    transition: background-color 0.3s;
+  }
+
+  .item-row:hover {
+    background-color: #e4ebf5;
+  }
+
+  /* Details within each item */
+  .item-detail {
+    text-align: left;
+  }
+
+  .item-detail label {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .item-detail p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  /* Button styling with updated colors */
   .btn {
     display: inline-block;
-    padding: 10px 20px;
-    margin: 10px 5px;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
     width: 100%;
+    padding: 12px 0;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #0069d9;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
   }
 
-  .btn-primary {
-    background-color: #0056b3;
-    color: white;
-  }
-
-  .btn-primary:hover {
-    background-color: #003366;
+  .btn:hover {
+    background-color: #0056a3;
+    transform: scale(1.02);
   }
 </style>

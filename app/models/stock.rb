@@ -6,5 +6,6 @@ class Stock < ApplicationRecord
   validates :barcode, presence: true, uniqueness: true
   has_many :sales
 
+  validates :barcode, length: { is: 13 }
 
 end

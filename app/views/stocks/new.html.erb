@@ -31,14 +31,27 @@
 
     <div class="form-group">
       <%= f.label :barcode %>
-      <%= f.number_field :barcode, class: 'form-control' %>
+      <%= f.number_field :barcode, class: 'form-control', maxlength: 13 %>
     </div>
 
     <div class="form-group">
-      <%= f.submit "Create Stock", class: 'btn btn-primary' %>
+      <%= f.submit "Cadastrar produto", class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('.stock-form');
+    form.addEventListener('submit', function(e) {
+      const barcode = document.querySelector('input[name="stock[barcode]"]').value;
+      if (barcode.length !== 13) {
+        alert('The barcode must be 13 characters long.');
+        e.preventDefault();
+      }
+    });
+  });
+</script>
 
 <style>
   body {

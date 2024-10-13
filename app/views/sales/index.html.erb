@@ -16,7 +16,7 @@
       <% @sales.each do |sale| %>
         <% if sale.stock %>
           <tr>
-            <td><%= link_to 'Download Recipe', download_recipe_sale_path(sale) %></td>
+            <td><%= link_to 'Baixar nota de venda', download_recipe_sale_path(sale) %></td>
             <td><%= sale.created_at.strftime("%d/%m/%Y %H:%M") %></td>
             <td><%= sale.stock.name %></td>
             <td><%= sale.quantity %></td>
@@ -29,7 +29,7 @@
   </table>
   <%= link_to 'Voltar para o inicio', root_path, class: 'btn btn-secondary' %>
 </div>
-
+-
 <style>
   body {
     font-family: Arial, sans-serif;

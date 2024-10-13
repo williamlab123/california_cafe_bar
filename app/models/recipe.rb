@@ -7,14 +7,13 @@ class Recipe < ApplicationRecord
   end
 
   def recipe_note
-    @recipe_note = "Receipt\n\n" +
-                   "Date: #{sale.created_at.strftime('%d/%m/%Y %H:%M')}\n\n" +
-                   "Sale Details:\n" +
-                   "Product: #{sale.stock.name}\n" +
-                   "Quantity: #{sale.quantity}\n" +
-                   "Total Price: #{sale.total_price}R$\n\n" +
-                   "Thank you for your purchase!"
-                   
+    @recipe_note = "Nota de venda\n\n" +
+                   "Data: #{sale.created_at.strftime('%d/%m/%Y %H:%M')}\n\n" +
+                   "Detalhes da venda:\n" +
+                   "Produto: #{sale.stock.name}\n" +
+                   "Quantidade: #{sale.quantity}\n" +
+                   "Preço final: #{sale.total_price}R$\n\n" +
+                   "Vendedor: #{sale.user.name}\n\n" + 
   end
 
   def recipe_params
