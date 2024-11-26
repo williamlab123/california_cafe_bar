@@ -1,111 +1,182 @@
-<h1>Scan Código de barras</h1>
-
-<style>
-  body {
-    font-family: Arial, sans-serif;
-  }
-
-  h1 {
-    color: #333;
-    text-align: center;
-  }
-
-  .form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-
-  .form-container input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  .form-container button, .form-container input[type="submit"] {
-    padding: 10px 20px;
-    margin: 10px 5px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-
-  .form-container button:hover, .form-container input[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-
-  .total-price {
-    font-size: 1.5em;
-    text-align: center;
-    margin: 20px 0;
-  }
-
-  .payment-method {
-    margin: 20px 0;
-    text-align: center;
-  }
-
-  .actions {
-    text-align: center;
-  }
-
-  .actions button, .actions a {
-    margin: 5px;
-  }
-</style>
-
-<div class="form-container">
-  <%= form_with url: barcodes_search_path, method: :post, id: 'barcode_form' do %>
-    <%= text_field_tag :barcode, nil, autofocus: true, placeholder: "Scan Barcode Here", oninput: "if(this.value.length === 13) this.form.submit();" %>
-  <% end %>
-
-  <%= form_with url: finish_sale_barcodes_path, method: :post, id: 'sale_form' do %>
-    <% (session[:stocks] || []).each_with_index do |stock, index| %>
-      <%= render 'stock', stock: stock, index: index %>
-    <% end %>
-
-    <% if session[:stocks] && session[:stocks].any? %>
-      <p class="total-price">Total Price: $<span id="total_price"><%= session[:stocks].sum { |stock| stock["price"] } %></span></p>
-      <div class="payment-method">
-        <%= label_tag :payment_method, 'Método de Pagamento' %>
-        <%= select_tag :payment_method, options_for_select([['Pix', 'pix'], ['Dinheiro', 'dinheiro'], ['Débito', 'debito'], ['Crédito', 'credito']]), prompt: 'Selecione um método' %>
-      </div>
-      <%= submit_tag 'Finish', id: 'finish_sale_button' %>
-    <% end %>
-  <% end %>
-
-  <div class="actions">
-    <%= button_to 'Cancelar', cancel_sale_barcodes_path, method: :post %>
-    <%= link_to 'Home', root_path %>
-  </div>
-</div>
-
-<script>
-  function updateTotalPrice() {
-    var totalPrice = 0;
-    document.querySelectorAll('.price_input').forEach(function(input) {
-      totalPrice += parseFloat(input.value);
-    });
-    var totalPriceElement = document.getElementById('total_price');
-    totalPriceElement.innerHTML = 'Total Price: $<span>' + totalPrice.toFixed(2) + '</span>';
-  }
-
-  document.querySelectorAll('.price_input').forEach(function(input) {
-    input.addEventListener('change', updateTotalPrice);
-  });
-
-  document.getElementById('sale_form').addEventListener('submit', function(event) {
-    var paymentMethod = document.getElementById('payment_method').value;
-    if (!paymentMethod) {
-      alert('Por favor, selecione um método de pagamento.');
-      event.preventDefault();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Código de barras</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
     }
-  });
-</script>
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin: 20px 0;
+      font-size: 2rem;
+    }
+
+    .form-container {
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .form-container button,
+    .form-container input[type="submit"] {
+      padding: 12px 20px;
+      margin: 15px 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-container button:hover,
+    .form-container input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    /* Fix for the "Cancelar" button */
+    .actions button {
+      background-color: #dc3545; /* Red background */
+      color: white; /* White text */
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .actions button:hover {
+      background-color: #c82333; /* Darker red for hover effect */
+    }
+
+    .total-price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 25px 0;
+      color: #333;
+    }
+
+    .payment-method {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .actions {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .actions button,
+    .actions a {
+      margin: 10px;
+      font-size: 1rem;
+      color: #000000;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .actions button:hover,
+    .actions a:hover {
+      color: #000000;
+    }
+
+    .form-container select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Scan Código de barras</h1>
+
+  <div class="form-container">
+    <%= form_with url: barcodes_search_path, method: :post, id: 'barcode_form' do %>
+      <%= text_field_tag :barcode, nil, autofocus: true, placeholder: "Scan Barcode Here", oninput: "if(this.value.length === 13) this.form.submit();" %>
+    <% end %>
+
+    <%= form_with url: finish_sale_barcodes_path, method: :post, id: 'sale_form' do %>
+      <% (session[:stocks] || []).each_with_index do |stock, index| %>
+        <%= render 'stock', stock: stock, index: index %>
+      <% end %>
+
+      <% if session[:stocks] && session[:stocks].any? %>
+        <p class="total-price">Preço total: $<span id="total_price"><%= session[:stocks].sum { |stock| stock["price"] } %></span></p>
+        
+        <div class="payment-method">
+
+        <%= select_tag :payment_method, options_for_select([['Pix', 'pix'], ['Dinheiro', 'dinheiro'], ['Débito', 'debito'], ['Crédito', 'credito']]), prompt: 'Selecione um método de pagamento' %>
+        </div>
+
+        <%= submit_tag 'Finish', id: 'finish_sale_button' %>
+      <% end %>
+    <% end %>
+
+    <div class="actions">
+      <%= button_to 'Cancelar', cancel_sale_barcodes_path, method: :post %>
+      <%= link_to 'Home', root_path %>
+    </div>
+  </div>
+
+  <script>
+    function updateTotalPrice() {
+      var totalPrice = 0;
+      document.querySelectorAll('.price_input').forEach(function(input) {
+        totalPrice += parseFloat(input.value);
+      });
+      var totalPriceElement = document.getElementById('total_price');
+      totalPriceElement.innerHTML = 'Preço total: $<span>' + totalPrice.toFixed(2) + '</span>';
+    }
+
+    document.querySelectorAll('.price_input').forEach(function(input) {
+      input.addEventListener('change', updateTotalPrice);
+    });
+
+    document.getElementById('sale_form').addEventListener('submit', function(event) {
+      var paymentMethod = document.getElementById('payment_method').value;
+      if (!paymentMethod) {
+        alert('Por favor, selecione um método de pagamento.');
+        event.preventDefault();
+      }
+
+      var salgadoType = document.querySelector('[id^="salgado_type_"]');
+      if (salgadoType && !salgadoType.value) {
+        alert('Por favor, selecione um tipo de salgado.');
+        event.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>

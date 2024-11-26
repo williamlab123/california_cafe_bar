@@ -17,9 +17,9 @@
       <div class="stock-actions">
         <%= form_with url: stock_path(stock), method: :post, class: 'delete-form' do %>
           <%= hidden_field_tag :_method, :delete %>
-          <%= submit_tag 'Delete', class: 'btn btn-danger' %>
+          <%= submit_tag 'Apagar', class: 'btn btn-danger' %>
         <% end %>
-        <%= link_to 'Edit', edit_stock_path(stock), class: 'btn btn-warning' %>
+        <%= link_to 'Editar', edit_stock_path(stock), class: 'btn btn-warning' %>
       </div>
     </div>
   <% end %>

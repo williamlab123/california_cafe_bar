@@ -13,7 +13,9 @@ class Recipe < ApplicationRecord
                    "Produto: #{sale.stock.name}\n" +
                    "Quantidade: #{sale.quantity}\n" +
                    "Preço final: #{sale.total_price}R$\n\n" +
-                   "Vendedor: #{sale.user.name}\n\n" + 
+                   "Califórnia Café Bar\n" +
+                   "Telefone (16) 99241-4255" 
+
   end
 
   def recipe_params

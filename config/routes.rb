@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   get 'home/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :stocks
-
+  resources :stocks do
+    member do
+      get 'amount'
+    end
+  end
   resources :clients
 
   resources :sales do
@@ -30,6 +33,8 @@ Rails.application.routes.draw do
   get '/dashboard/stock', to: 'dashboard#stock', as: :dashboard_stock
   get '/dashboard/export', to: 'dashboard#export', as: :dashboard_export
   get 'dashboard/export_week_sales', to: 'dashboard#export_week_sales', as: 'export_week_sales'
+  get 'details_by_month/:month', to: 'dashboard#details_by_month', as: 'details_by_month'
+
 
   
   get 'login', to: 'sessions#index'

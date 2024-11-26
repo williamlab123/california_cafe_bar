@@ -24,7 +24,7 @@
 </table>
 <p class="balance">Saldo do dia: <%= @today_balance %></p>
 
-<h1>Dashboard</h1>
+<h1>Meses</h1>
 <table class="sales-table">
   <thead>
     <tr>
@@ -34,14 +34,17 @@
     </tr>
   </thead>
   <tbody>
-    <% @sales_totals_by_month.each do |month, (total_price, total_quantity)| %>
-      <tr>
-        <td><%= month.strftime('%B %Y') %></td>
-        <td><%= total_price %></td>
-        <td><%= total_quantity %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% @sales_totals_by_month.each do |month, (total_price, total_quantity)| %>
+    <tr>
+      <td>
+        <%= link_to month.strftime('%B %Y'), details_by_month_path(month: month.strftime('%Y-%m')) %>
+      </td>
+      <td><%= total_price %></td>
+      <td><%= total_quantity %></td>
+    </tr>
+  <% end %>
+</tbody>
+
 </table>
 
 <div class="button-container">

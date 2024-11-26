@@ -51,6 +51,16 @@ class DashboardController < ApplicationController
 
   def compare_months; end
 
+def details_by_month
+  month = Date.strptime(params[:month], '%Y-%m')
+  @sales_details = Sale.where(created_at: month.beginning_of_month..month.end_of_month)
+  @monthly_balance = @sales_details.sum(:total_price)
+
+end
+
+
+
+
   def index
    end
 

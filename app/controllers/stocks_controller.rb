@@ -6,13 +6,24 @@ class StocksController < AuthenticatedController
   end
 
   def create
-    @stock = Stock.new(stock_params.merge(user: current_user))
+    # Assign default barcode if the field is left blank
+    default_barcode = "DEFAULT_BARCODE_#{SecureRandom.hex(3)}"
+    @stock = Stock.new(stock_params.merge(user: current_user, barcode: stock_params[:barcode].presence || default_barcode))
+  
     if @stock.save
-      redirect_to new_stock_path
+      redirect_to new_stock_path, notice: 'Stock created successfully.'
     else
+      logger.debug "Stock creation failed: #{@stock.errors.full_messages}"
       render :new
     end
   end
+
+  def amount
+    stock = Stock.find(params[:id])
+    render json: { amount: stock.amount }
+  end
+  
+  
 
   def show
     @stock = Stock.find(params[:id])
@@ -45,6 +56,6 @@ end
   private
 
   def stock_params
-    params.require(:stock).permit(:name, :amount, :price, :barcode)
+    params.require(:stock).permit(:name, :amount, :price, :barcode, :is_salgado)
   end
 end

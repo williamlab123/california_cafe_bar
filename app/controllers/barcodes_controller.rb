@@ -22,26 +22,30 @@ class BarcodesController < ApplicationController
     
     redirect_to barcodes_scan_path
   end
-
-
+  
   def finish_sale
     payment_method = params[:payment_method]
 
-    session[:stocks].each do |stock_data|
+    session[:stocks].each_with_index do |stock_data, index|
       stock_info = stock_data.is_a?(Array) ? stock_data.last : stock_data
       stock = Stock.find(stock_info['id'])
-  
+
+      if stock.barcode == '1111111111111' && params[:stocks] && params[:stocks][index.to_s]
+        salgado_type_id = params[:stocks][index.to_s][:salgado_type]
+        stock = Stock.find(salgado_type_id)
+      end
+
       puts "Current stock amount: #{stock.amount}, trying to create sale with quantity: 1"
-  
+
       sale = Sale.new(stock: stock, quantity: 1, payment_method: payment_method)
-  
+
       if sale.save
         puts "Sale successfully created!"
       else
         puts "Sale failed to save: #{sale.errors.full_messages}"
       end
     end
-  
+
     session[:stocks] = []
     redirect_to barcodes_scan_path, notice: 'Sale was successfully created.'
   end

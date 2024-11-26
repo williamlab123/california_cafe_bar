@@ -15,12 +15,12 @@
 
   <%= form_for @stock, url: stocks_path, class: 'stock-form' do |f| %>
     <div class="form-group">
-      <%= f.label :name %>
+      <%= f.label :Nome %>
       <%= f.text_field :name, class: 'form-control' %>
     </div>
 
     <div class="form-group">
-      <%= f.label :amount %>
+      <%= f.label :Quantidade %>
       <%= f.number_field :amount, class: 'form-control' %>
     </div>
 
@@ -30,28 +30,20 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :barcode %>
-      <%= f.number_field :barcode, class: 'form-control', maxlength: 13 %>
+  <%= f.label :barcode %>
+  <%= f.text_field :barcode, class: 'form-control', placeholder: "Auto-generated if left blank" %>
+</div>
+
+    <div class="form-group">
+      <%= f.check_box :is_salgado %>
+      <%= f.label :is_salgado, 'É um salgado?' %>
     </div>
 
     <div class="form-group">
-      <%= f.submit "Cadastrar produto", class: 'btn btn-primary' %>
+      <%= f.submit "Create Stock", class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector('.stock-form');
-    form.addEventListener('submit', function(e) {
-      const barcode = document.querySelector('input[name="stock[barcode]"]').value;
-      if (barcode.length !== 13) {
-        alert('The barcode must be 13 characters long.');
-        e.preventDefault();
-      }
-    });
-  });
-</script>
 
 <style>
   body {
