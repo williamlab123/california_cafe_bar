@@ -1,8 +1,7 @@
-<!-- app/views/stocks/new.html.erb -->
 <div class="container">
   <% if @stock.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
+      <h2><%= pluralize(@stock.errors.count, "erro") %> impediram este estoque de ser salvo:</h2>
       <ul>
         <% @stock.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -11,44 +10,44 @@
     </div>
   <% end %>
 
-  <%= link_to 'Voltar para o inicio', root_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Voltar para o início', root_path, class: 'btn btn-secondary' %>
 
   <%= form_for @stock, url: stocks_path, class: 'stock-form' do |f| %>
     <div class="form-group">
-      <%= f.label :Nome %>
-      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.label :name, "Nome", class: "form-label" %>
+      <%= f.text_field :name, class: 'form-control', placeholder: "Digite o nome do estoque" %>
     </div>
 
     <div class="form-group">
-      <%= f.label :Quantidade %>
-      <%= f.number_field :amount, class: 'form-control' %>
+      <%= f.label :amount, "Quantidade", class: "form-label" %>
+      <%= f.number_field :amount, class: 'form-control', placeholder: "Digite a quantidade" %>
     </div>
 
     <div class="form-group">
-      <%= f.label :price %>
-      <%= f.number_field :price, step: 0.01, class: 'form-control' %>
+      <%= f.label :price, "Preço (R$)", class: "form-label" %>
+      <%= f.number_field :price, step: 0.01, class: 'form-control', placeholder: "Exemplo: 10.50" %>
     </div>
 
     <div class="form-group">
-  <%= f.label :barcode %>
-  <%= f.text_field :barcode, class: 'form-control', placeholder: "Auto-generated if left blank" %>
-</div>
+      <%= f.label :barcode, "Código de barras", class: "form-label" %>
+      <%= f.text_field :barcode, class: 'form-control', placeholder: "Gerado automaticamente se vazio" %>
+    </div>
 
-    <div class="form-group">
-      <%= f.check_box :is_salgado %>
-      <%= f.label :is_salgado, 'É um salgado?' %>
+    <div class="form-group checkbox-group">
+      <%= f.check_box :is_salgado, class: 'form-check-input' %>
+      <%= f.label :is_salgado, "O produto que você está adicionando agora é um salgado?", class: 'form-check-label' %>
     </div>
 
     <div class="form-group">
-      <%= f.submit "Create Stock", class: 'btn btn-primary' %>
+      <%= f.submit "Criar Estoque", class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>
 
 <style>
   body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Roboto', sans-serif;
+    background-color: #e9ecef;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -58,25 +57,26 @@
   }
 
   .container {
-    text-align: center;
     background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     width: 400px;
   }
 
   #error_explanation {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: #ffdddd;
+    color: #d8000c;
     border: 1px solid #f5c6cb;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
   }
 
   #error_explanation h2 {
-    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
   }
 
   #error_explanation ul {
@@ -86,49 +86,92 @@
   }
 
   #error_explanation li {
+    font-size: 14px;
     margin: 5px 0;
   }
 
   .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: left;
+  }
+
+  .form-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
   }
 
   .form-control {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+  }
+
+  .form-control:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .form-check-input {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-check-label {
+    font-size: 14px;
   }
 
   .btn {
     display: inline-block;
     padding: 10px 20px;
-    margin: 10px 5px;
+    margin: 10px 0;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
+    font-size: 14px;
     width: 100%;
   }
 
   .btn-primary {
-    background-color: #0056b3;
+    background-color: #007bff;
     color: white;
+    transition: background-color 0.3s ease, transform 0.2s;
   }
 
   .btn-primary:hover {
-    background-color: #003366;
+    background-color: #0056b3;
+    transform: translateY(-2px);
   }
 
   .btn-secondary {
     background-color: #6c757d;
     color: white;
+    transition: background-color 0.3s ease, transform 0.2s;
   }
 
   .btn-secondary:hover {
     background-color: #5a6268;
+    transform: translateY(-2px);
+  }
+
+  .btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
 </style>

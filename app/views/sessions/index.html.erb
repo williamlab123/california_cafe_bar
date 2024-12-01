@@ -1,111 +1,121 @@
-<% flash.each do |message_type, message| %>
-  <div class="alert alert-<%= message_type %>">
-    <%= message %>
-  </div>
-<% end %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: linear-gradient(135deg, #a3baff, #6c8cff);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      color: #333;
+    }
 
-<div class="login-container">
-  <%= form_with(url: login_path, local: true, class: 'login-form') do |form| %>
-    <div class="form-group">
-      <%= form.label :username %>
-      <%= form.text_field :username, name: 'session[username]', class: 'form-control' %>
+    /* Login Container */
+    .login-container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 360px;
+    }
+    
+    .alert {
+      padding: 15px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+    }
+    
+    .alert.alert-notice {
+      color: #155724;
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+    }
+    
+    .alert.alert-alert {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+    
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      margin-top: 10px;
+      background-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <% if flash[:error] %>
+    <div class="alert alert-error">
+      <%= flash[:error] %>
     </div>
-    <div class="form-group">
-      <%= form.label :password %>
-      <%= form.password_field :password, name: 'session[password]', class: 'form-control' %>
-    </div>
-    <%= form.submit "Login", class: 'btn btn-primary' %>
   <% end %>
 
-  <%= link_to 'Criar novo usuário', new_user_path, class: 'btn btn-secondary' %>
-</div>
-
-<style>
- body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.login-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Increases the space between the buttons */
-    margin-top: 15px; /* Adds some space above the button group */
-}
-
-
-.btn {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    width: 100%; /* Ensures buttons take full width of the container */
-}
-
-.btn-primary {
-    background-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-.btn-secondary {
-    margin-top: 200px;
-    background-color: #6c757d;
-}
-
-.btn-secondary:hover {
-    background-color: #5a6268;
-}
-
-.alert {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.alert-notice {
-    background-color: #e7f3fe;
-    color: #31708f;
-    border: 1px solid #bce8f1;
-}
-
-.alert-alert {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-</style>
+  <div class="login-container">
+    <h1>Login</h1>
+    <%= form_with(url: login_path, local: true, class: 'login-form') do |form| %>
+      <div class="form-group">
+        <%= form.label :username, "Usuário" %>
+        <%= form.text_field :username, name: 'session[username]', class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= form.label :password, "Senha" %>
+        <%= form.password_field :password, name: 'session[password]', class: 'form-control' %>
+      </div>
+      <%= form.submit "Entrar", class: 'btn btn-primary' %>
+    <% end %>
+    <%= link_to 'Criar novo usuário', new_user_path, class: 'btn btn-secondary' %>
+  </div>
+</body>
+</html>

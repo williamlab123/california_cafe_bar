@@ -1,40 +1,48 @@
 <div class="container">
   <h1>Dashboard</h1>
   <div class="button-container">
-    <%#= link_to 'Vendas', sales_path, class: 'btn btn-success' %>
-    <%= link_to 'Estoque', stocks_path, class: 'btn btn-warning' %>
-    <%= link_to 'Dashboard', dashboard_index_path, class: 'btn btn-primary' %>
-    <%= link_to 'Leitor', barcodes_scan_path, class: 'btn btn-orange' %>
-    <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
+    <%= link_to 'Estoque', stocks_path, class: 'btn' %>
+    <%= link_to 'Dashboard', dashboard_index_path, class: 'btn' %>
+    <%= link_to 'Leitor', barcodes_scan_path, class: 'btn' %>
+    <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-logout' %>
   </div>
 </div>
 
 <%= render "dashboard/sexo" %>
 
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+  /* General Reset and Styling */
+  * {
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(135deg, #f8fafc, #e9ecef);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #333;
   }
 
   .container {
-    text-align: center;
-    background-color: #d3d3d3;
+    background: #ffffff;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid black;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
   }
 
   h1 {
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #2b2b2b;
   }
 
   .button-container {
@@ -44,60 +52,52 @@
   }
 
   .btn {
-    display: inline-block;
-    padding: 15px 30px;
-    margin: 5px 0;
+    display: block;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    background: #4f46e5; /* Modern Indigo */
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
     text-decoration: none;
     text-align: center;
-    cursor: pointer;
-    width: 250px;
-    align-self: center;
   }
 
-  .btn-primary {
-    background-color: #004494;
-    color: white;
+  .btn:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
   }
 
-  .btn-primary:hover {
-    background-color: #003366;
+  .btn:active {
+    transform: translateY(1px);
+    background: #4f46e5;
   }
 
-  .btn-danger {
-    background-color: #a71d2a;
-    color: white;
+  /* Logout Button */
+  .btn-logout {
+    background: #e11d48; /* Red */
   }
 
-  .btn-danger:hover {
-    background-color: #7f1420;
+  .btn-logout:hover {
+    background: #b91c1c;
   }
 
-  .btn-success {
-    background-color: #1e7e34;
-    color: white;
-  }
+  /* Adaptive Design */
+  @media (max-width: 480px) {
+    .container {
+      padding: 30px;
+    }
 
-  .btn-success:hover {
-    background-color: #155724;
-  }
+    h1 {
+      font-size: 1.8rem;
+    }
 
-  .btn-warning {
-    background-color: #c69500;
-    color: black;
-  }
-
-  .btn-warning:hover {
-    background-color: #8c6d00;
-  }
-
-  .btn-orange {
-    background-color: #c06000;
-    color: white;
-  }
-
-  .btn-orange:hover {
-    background-color: #8c4600;
+    .btn {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
   }
 </style>

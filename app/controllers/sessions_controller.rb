@@ -14,17 +14,25 @@ class SessionsController < ApplicationController
     else
       Rails.logger.debug "No user found with username: #{session_params[:username]}"
     end
-  
-    if user && user.authenticate(session_params[:password])
+    
+    if user&.authenticate(session_params[:password])
       session[:user_id] = user.id
-      redirect_to root_url, notice: 'Logged in successfully'
+      Rails.logger.debug "Flash message: Login realizado com sucesso!"
+      redirect_to root_url, notice: 'Login realizado com sucesso!'
     else
-      flash.now[:alert] = 'Invalid username/password combination'
-      Rails.logger.debug "SEXOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-      # render :new
+      flash.now[:alert] = 'Combinação de nome de usuário/senha inválida'
+      Rails.logger.debug "Flash alert: #{flash.now[:alert]}"
+      render :new
     end
+    
   end
-
+  
+  private
+  
+  def session_params
+    params.require(:session).permit(:username, :password)
+  end
+  
   def destroy
     if @current_user
       reset_session
@@ -33,9 +41,6 @@ class SessionsController < ApplicationController
       redirect_to login_path, notice: 'No user logged in'
     end
   end
-
-      
-    
 
   private
 
