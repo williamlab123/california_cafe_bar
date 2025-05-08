@@ -1,0 +1,40 @@
+<!-- app/views/clients/index.html.erb -->
+
+<%# <head>
+  <style>
+    h1 {
+      text-align: center;
+    }
+   
+  </style>
+</head> %>
+<h1>Clients</h1>
+
+<table>
+  <thead>
+      <%= link_to 'Back to Index', root_path %>
+
+       <%= link_to 'Create Sale', new_sale_path %>
+
+       <td><%= link_to 'Create Client', '/clients/new' %></td>
+    <tr>
+      <th>Name</th>
+      <th>Balance</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+   <% @clients.each do |client| %>
+  <tr>
+    <td><%= client.name %></td>
+    <td><%= client.balance %></td>
+    <td>
+      <%= form_with url: client_path(client), method: :delete do %>
+        <%= submit_tag 'Delete Client' %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+  </tbody>
+</table>

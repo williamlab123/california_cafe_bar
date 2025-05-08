@@ -1,0 +1,19 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Vendas de Hoje") do |sheet|
+  sheet.add_row ["Produto", "Quantidade", "Preço Total", "Data", "Método de Pagamento"]
+
+  @today_sales.each do |sale|
+    stock = sale.stock
+    sheet.add_row [
+      stock ? stock.name : 'Produto não encontrado',
+      sale.quantity,
+      sprintf("R$ %.2f", sale.total_price),
+      sale.created_at.in_time_zone('Brasilia').strftime('%d/%m/%Y - %H:%M:%S'),
+      sale.payment_method.capitalize
+    ]
+  end
+
+  sheet.add_row []
+  sheet.add_row ["Saldo do dia:", sprintf("R$ %.2f", @today_balance)]
+end

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes das Vendas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 800px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .sales-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .sales-table th, .sales-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sales-table th {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+
+    .sales-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .sales-table tr:hover {
+      background-color: #f1f1f1;
+      transition: background-color 0.3s ease;
+    }
+
+    .payment-details {
+      margin: 20px 0;
+      font-size: 16px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .payment-details strong {
+      font-weight: bold;
+    }
+
+    .payment-details ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+
+    .payment-details ul li {
+      margin: 5px 0;
+    }
+
+    .payment-details p, .payment-details ul {
+      text-align: center;
+    }
+
+    .btn-home {
+      display: inline-block;
+      padding: 12px 24px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      background-color: #6c757d;
+      color: white;
+      font-size: 16px;
+    }
+
+    .btn-home:hover {
+      background-color: #5a6268;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-container {
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+        padding: 20px;
+      }
+
+      .sales-table th, .sales-table td {
+        font-size: 14px;
+      }
+
+      .btn-home {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Detalhes das vendas de <%= I18n.l(Date.strptime(params[:month], '%Y-%m'), format: :month_year, locale: :pt) %></h1>
+
+    <table class="sales-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Preço Total</th>
+          <th>Quantidade</th>
+          <th>Método de Pagamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% grouped_sales = @sales_details.group_by { |sale| sale.stock&.name || 'Produto desconhecido' } %>
+        <% grouped_sales.each do |item_name, sales| %>
+          <tr>
+            <td><%= item_name %></td>
+            <td>R$ <%= number_to_currency(sales.sum(&:total_price), unit: '', separator: ',', delimiter: '.') %></td>
+<tr>
+  <td>
+  <%= sales.group_by(&:payment_method).map { |method, s| "#{(method.presence || 'Desconhecido').capitalize}: #{s.count}" }.join(", ") %>
+  </td>
+
+
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+
+
+    <% payment_methods = @sales_details.group_by(&:payment_method) %>
+    <% most_used_payment_method = payment_methods.max_by { |method, sales| sales.count } %>
+
+<div class="payment-details">
+  <p><strong>Método de Pagamento Mais Usado:</strong>
+    <%= (most_used_payment_method.first.presence || 'Desconhecido').capitalize %>
+    (<%= most_used_payment_method.last.count %> vezes,
+    R$ <%= number_to_currency(most_used_payment_method.last.sum(&:total_price), unit: '', separator: ',', delimiter: '.') %>)
+  </p>
+</div>
+
+
+      <p><strong>Outros Métodos de Pagamento:</strong></p>
+<ul>
+  <% payment_methods.each do |method, sales| %>
+    <% unless method == most_used_payment_method.first %>
+      <li>
+        <%= (method.presence || 'Desconhecido').capitalize %>: <%= sales.count %> vezes, 
+        R$ <%= number_to_currency(sales.sum(&:total_price), unit: '', separator: ',', delimiter: '.') %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+
+      
+
+      <p><strong>Saldo Total do Mês:</strong> 
+        R$ <%= number_to_currency(@monthly_balance, unit: '', separator: ',', delimiter: '.') %>
+      </p>
+    </div>
+
+    <div class="button-container">
+      <a href="<%= root_path %>" class="btn-home">Voltar para o início</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do Produto</title>
+  <style>
+    /* General layout */
+    .product-details {
+      background-color: #f9f9f9;
+      padding: 20px;
+      margin: 10px auto;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+    }
+
+    /* Heading styles */
+    .product-details h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .product-details h3 {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    /* Paragraph and label styles */
+    .product-details p {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .product-details select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      background-color: #fff;
+    }
+
+    /* Price display styles */
+    .product-details #price_<%= index %> {
+      font-size: 20px;
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    .product-details .price_input {
+      display: none;
+    }
+
+    /* Button styling */
+    .product-details button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    .product-details button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="product-details">
+    <h2>Detalhes do Produto:</h2>
+    <% if stock["barcode"] == '1111111111111' %>
+      <p>Salgado</p>
+      <%= select_tag "stocks[#{index}][salgado_type]", options_for_select(Stock.where(is_salgado: true).map { |s| [s.name, s.id] }), prompt: 'Selecione um salgado', id: "salgado_type_#{index}", onchange: "updateStockAmount(#{index})" %>
+      <p id="stock_amount_<%= index %>">Quantidade em estoque: --</p>
+    <% else %>
+      <p>Nome: <%= stock["name"] %></p>
+      <p>Quantidade em estoque: <%= stock["amount"] %></p>
+    <% end %>
+    <!-- Current Price Display -->
+    <p>Preço: R$ <span id="price_<%= index %>"><%= stock["price"].to_f.round(2) %></span></p>
+
+    <!-- Hidden field that needs to be updated when price changes -->
+    <%= hidden_field_tag "stocks[#{index}][price]", stock["price"], id: "price_input_#{index}", class: 'price_input' %>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Ensure the changePrice function is tied to the buttons
+      window.changePrice = function(index, delta) {
+        let priceSpan = document.getElementById(`price_${index}`);
+        let currentPrice = parseFloat(priceSpan.innerText);
+        let newPrice = currentPrice + delta;
+        
+        if (newPrice < 0) newPrice = 0;
+        
+        priceSpan.innerText = newPrice.toFixed(2);
+
+        let priceInput = document.getElementById(`price_input_${index}`);
+        priceInput.value = newPrice.toFixed(2);
+
+        // Debug log to ensure values are correct
+        console.log(`Updated price for index ${index}: ${newPrice}`);
+        console.log(`Hidden input for submission: ${priceInput.value}`);
+      };
+
+      window.updateStockAmount = function(index) {
+        let salgadoSelect = document.getElementById(`salgado_type_${index}`);
+        let selectedSalgadoId = salgadoSelect.value;
+        let stockAmountElement = document.getElementById(`stock_amount_${index}`);
+
+        if (selectedSalgadoId) {
+          fetch(`/stocks/${selectedSalgadoId}/amount`)
+            .then(response => response.json())
+            .then(data => {
+              stockAmountElement.innerText = `Quantidade em estoque: ${data.amount}`;
+            })
+            .catch(error => {
+              console.error('Error fetching stock amount:', error);
+            });
+        } else {
+          stockAmountElement.innerText = 'Quantidade em estoque: --';
+        }
+      };
+    });
+  </script>
+</body>
+</html>

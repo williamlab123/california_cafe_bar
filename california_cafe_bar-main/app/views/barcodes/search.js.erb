@@ -1,0 +1,10 @@
+<!-- app/views/barcodes/search.js.erb -->
+document.getElementById('product-details').innerHTML = `
+  <h2>Produto encontrado</h2>
+  <p><strong>Name:</strong> <%= j @product.name %></p>
+  <p><strong>Barcode:</strong> <%= j @product.barcode %></p>
+  <p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+`;
+
+// Clear the input field after displaying the product
+document.getElementById('barcode-input').value = '';

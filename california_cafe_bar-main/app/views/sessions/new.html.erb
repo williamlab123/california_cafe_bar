@@ -1,0 +1,18 @@
+<%= form_with model: @user, local: true do |form| %>
+  <div>
+    <%= form.label :username %>
+    <%= form.text_field :username %>
+  </div>
+  <div>
+    <%= form.label :password %>
+    <%= form.password_field :password %>  
+  </div> 
+   <div>
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>  
+  </div> 
+  <div>
+    <%= form.submit "Create User" %>
+  </div>
+<% end %>
+

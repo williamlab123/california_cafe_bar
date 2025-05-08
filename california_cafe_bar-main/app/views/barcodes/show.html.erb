@@ -1,0 +1,8 @@
+<!-- app/views/barcodes/show.html.erb -->
+<h1>Produto encontrado</h1>
+
+<p><strong>Nome:</strong> <%= @stock.name %></p>
+<p><strong>Código de barras:</strong> <%= @stock.barcode %></p>
+<p><strong>Preço:</strong> <%= number_to_currency(@stock.price) %></p>
+
+<a href="<%= barcodes_scan_path %>">Scaniar outro</a>

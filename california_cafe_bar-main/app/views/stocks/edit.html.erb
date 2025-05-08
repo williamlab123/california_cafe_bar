@@ -1,0 +1,110 @@
+<div class="container">
+  <h1>Editar Produto</h1>
+  <div class="form-container">
+    <%= form_with(model: @stock, local: true, class: 'stock-form') do |form| %>
+      <div class="form-group">
+        <%= form.label :name, "Nome do Produto" %>
+        <%= form.text_field :name, class: 'form-control', placeholder: "Digite o nome do produto" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :price, "Preço" %>
+        <%= form.number_field :price, step: 0.01, class: 'form-control', placeholder: "Digite o preço" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :amount, "Quantidade" %>
+        <%= form.number_field :amount, class: 'form-control', placeholder: "Digite a quantidade" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :barcode, "Código de Barras" %>
+        <%= form.number_field :barcode, class: 'form-control', placeholder: "Digite o código de barras" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.submit "Atualizar", class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin: auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .form-container {
+    background-color: #e0e0e0;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  label {
+    font-weight: bold;
+    color: #555;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+
+  .form-control:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
+    outline: none;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .btn-primary {
+    background-color: #0056b3;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #003366;
+  }
+</style>

@@ -1,0 +1,17 @@
+<%= form_with(model: @sale, local: true) do |form| %>
+
+  <div>
+    <%= form.label :stock_id %>
+    <%= form.select :stock_id, Stock.where(user_id: session[:user_id]).collect { |stock| ["#{stock.name} (#{stock.amount} available)", stock.id] } %>
+  </div>
+
+  <div>
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+  </div>
+
+ 
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

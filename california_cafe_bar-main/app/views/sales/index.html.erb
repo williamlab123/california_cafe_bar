@@ -1,0 +1,105 @@
+<!-- app/views/sales/index.html.erb -->
+<div class="container">
+  <h1>Todas as Vendas</h1>
+  <table class="sales-table">
+    <thead>
+      <tr>
+        <th>Nota</th>
+        <th>Quando</th>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sales.each do |sale| %>
+        <% if sale.stock %>
+          <tr>
+            <td><%= link_to 'Baixar nota de venda', download_recipe_sale_path(sale) %></td>
+            <td><%= sale.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+            <td><%= sale.stock.name %></td>
+            <td><%= sale.quantity %></td>
+            <td><%= sale.stock.price %></td>
+            <td><%= sale.total_price %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Voltar para o inicio', root_path, class: 'btn btn-secondary' %>
+</div>
+-
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .sales-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .sales-table th, .sales-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .sales-table th {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .sales-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .sales-table tr:hover {
+    background-color: #ddd;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+</style>

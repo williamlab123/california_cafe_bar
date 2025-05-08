@@ -1,0 +1,176 @@
+<div class="container">
+  <div class="page-title">
+    <h1>Itens Vendidos Hoje</h1>
+  </div>
+
+  <% @stock_items_sold.group_by(&:first).each do |stock_id, items| %>
+    <% stock = Stock.find_by_id(stock_id) %>
+    <div class="item-row">
+      <div class="item-detail">
+        <% if stock %>
+          <%= link_to stock.name, stock_path(stock), class: 'btn-stock' %>
+        <% else %>
+          <p class="error-message">Produto não encontrado</p>
+        <% end %>
+      </div>
+      <div class="item-detail quantity">
+        <label>Quantidade</label>
+        <p><%= items.sum(&:last) %></p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to 'Home', root_path, class: 'btn-home' %>
+</div>
+
+<style>
+  /* Global styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #e0e0e0, #cfd2d4); /* Slightly darker gray gradient */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .page-title h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+  }
+
+  /* Container */
+  .container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    animation: slideUp 0.8s ease-in-out;
+  }
+
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .item-row:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Item details */
+  .item-detail {
+    flex: 1;
+    text-align: left;
+  }
+
+  .item-detail label {
+    display: block;
+    font-size: 0.85rem;
+    color: #718096;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+  }
+
+  .item-detail p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  .quantity p {
+    color: #2b6cb0;
+    font-weight: 600;
+  }
+
+  .error-message {
+    font-size: 1rem;
+    color: #e53e3e;
+    font-weight: bold;
+  }
+
+  /* Buttons */
+  .btn-stock {
+    padding: 10px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #3182ce;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-stock:hover {
+    background-color: #2c5282;
+    transform: scale(1.05);
+  }
+
+  .btn-home {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #38a169;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-home:hover {
+    background-color: #2f855a;
+    transform: scale(1.03);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>

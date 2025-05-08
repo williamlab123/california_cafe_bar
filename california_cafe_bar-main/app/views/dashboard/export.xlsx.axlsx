@@ -1,0 +1,34 @@
+wb = xlsx_package.workbook
+
+# Estilos
+styles = wb.styles
+header_style = styles.add_style(b: true, alignment: { horizontal: :center }, bg_color: '007bff', fg_color: 'FFFFFF')
+currency_style = styles.add_style(num_fmt: 5) # Formato moeda
+center_style = styles.add_style(alignment: { horizontal: :center })
+date_style = styles.add_style(format_code: 'dd/mm/yyyy - hh:mm:ss')
+
+wb.add_worksheet(name: "Vendas do Dia") do |sheet|
+  # Cabeçalhos da tabela
+  sheet.add_row ["Estoque", "Quantidade", "Preço Total", "Data", "Método de Pagamento"], style: header_style
+
+  @today_sales.each do |sale|
+    stock = sale.stock
+    stock_name = stock.present? ? stock.name : 'Produto não encontrado'
+    payment_method = sale.payment_method.present? ? sale.payment_method.capitalize : 'Desconhecido'
+
+    sheet.add_row [
+      stock_name,
+      sale.quantity,
+      sale.total_price,
+      sale.created_at.in_time_zone('Brasilia'),
+      payment_method
+    ], style: [center_style, center_style, currency_style, date_style, center_style]
+  end
+
+  # Espaço antes do saldo
+  sheet.add_row []
+  
+  # Linha com saldo total
+  sheet.add_row ["", "", "", "Saldo do dia:", @today_sales.sum(&:total_price)],
+                style: [nil, nil, nil, header_style, currency_style]
+end

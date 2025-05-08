@@ -1,0 +1,121 @@
+<div class="container">
+  <h1 class="stock-title"><%= @stock.name %></h1>
+
+  <div class="stock-details">
+    <p>
+      <strong>Preço:</strong> <span><%= number_to_currency(@stock.price, unit: "R$", separator: ",", delimiter: ".") %></span>
+    </p>
+    <p>
+      <strong>Quantidade em estoque:</strong> <span><%= @stock.amount %></span>
+    </p>
+    <p>
+      <strong>Código de barras:</strong> <span><%= @stock.barcode %></span>
+    </p>
+  </div>
+
+  <%= link_to 'Voltar', stocks_path, class: 'btn btn-back' %>
+</div>
+
+<style>
+  /* General styles */
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #dce7f9, #cdd1e3);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    max-width: 450px;
+    width: 100%;
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .stock-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2b4f81;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .stock-details {
+    text-align: left;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #f6f8fc;
+    border: 1px solid #e1e8f0;
+    box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .stock-details p {
+    margin: 12px 0;
+    font-size: 1.1rem;
+    color: #3d4852;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stock-details strong {
+    font-size: 0.95rem;
+    color: #2b6cb0;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+  }
+
+  .stock-details span {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #2d3748;
+  }
+
+  .btn {
+    display: inline-block; /* Inline block for better sizing */
+    padding: 15px 30px; /* Adjust padding for compact button size */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(135deg, #38a169, #2f855a);
+    transition: all 0.3s ease;
+    margin: 0 auto; /* Center horizontally */
+  }
+
+  .btn:hover {
+    background: linear-gradient(135deg, #2f855a, #276749);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-back {
+    margin-top: 20px;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
